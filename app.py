@@ -61,5 +61,5 @@ def predict():
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
 
-# ASGI wrapper for uvicorn deployment
+# ASGI adapter for running under Uvicorn
 asgi_app = WsgiToAsgi(app)
