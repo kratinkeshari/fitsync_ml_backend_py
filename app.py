@@ -58,6 +58,32 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 
+# Lightweight health and info routes (no model call)
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        'status': 'ok',
+        'service': 'ml-backend',
+        'endpoints': {
+            'predict': 'POST /predict',
+            'health': 'GET /healthz',
+            'live': 'GET /livez'
+        }
+    }), 200
+
+
+@app.route('/healthz', methods=['GET'])
+def healthz():
+    # Basic process health; does not touch model
+    return 'ok', 200
+
+
+@app.route('/livez', methods=['GET'])
+def livez():
+    # Liveness probe
+    return 'ok', 200
+
+
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
 
